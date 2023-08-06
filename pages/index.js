@@ -17,6 +17,14 @@ export default function Home() {
         <link rel="icon" href="/square_cctr_logo.png" />
       </Head>
       <main className={styles.Head}>Hello World!</main>
+      <ul>
+        <li>
+          <Link href="/pages/transcript.js">JSON Transcript Fetch</Link>
+        </li>
+        <li>
+          <Link href="/pages/transcript-words.js">Text Transcript Fetch</Link>
+        </li>
+      </ul>
     </Layout>
   );
 }
