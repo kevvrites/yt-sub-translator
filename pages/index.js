@@ -19,10 +19,10 @@ export default function Home() {
       <main className={styles.Head}>Hello World!</main>
       <ul>
         <li>
-          <Link href="/pages/transcript.js">JSON Transcript Fetch</Link>
+          <Link href="../transcript">JSON Transcript Fetch</Link>
         </li>
         <li>
-          <Link href="/pages/transcript-words.js">Text Transcript Fetch</Link>
+          <Link href="../transcript-words">Text Transcript Fetch</Link>
         </li>
       </ul>
     </Layout>
