@@ -25,6 +25,14 @@ export default function Home() {
           <Link href="../transcript-words">Text Transcript Fetch</Link>
         </li>
       </ul>
+
+      <h3>Todo</h3>
+      <ul>
+        <li>Clean transcript using openai</li>
+        <li>Translate transcript using openai</li>
+        <li>Add support for file downloads</li>
+        <li>Clean up interfaces</li>
+      </ul>
     </Layout>
   );
 }
