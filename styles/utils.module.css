@@ -1,5 +1,6 @@
-.borderHorizLogo {
-  border-radius: 25px;
+.Head {
+  width: 100%;
+  margin: 1rem;
 }
 
 .heading {

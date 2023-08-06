@@ -36,7 +36,7 @@ export default function Layout({ children, home }) {
             alt="logo of CC translator"
           />
         </Link>
-        <Link href="/" styles={{ textDecoration: "none" }}>
+        <Link href="/" style={{ textDecoration: "none" }}>
           <h1 className={styles.heading}>YouTube Subtitle Translator</h1>
         </Link>
       </header>
