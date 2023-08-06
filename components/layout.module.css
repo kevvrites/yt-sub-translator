@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.header a {
+.header h1 {
   margin-left: 30px;
 }
 
@@ -19,13 +19,6 @@
   text-decoration: none;
 }
 
-.heading :hover {
-  color: blue;
-}
-
-.heading :active {
-  color: green;
-}
 .borderHorizLogo {
   border-radius: 25px;
   width: auto;

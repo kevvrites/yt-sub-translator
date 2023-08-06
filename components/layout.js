@@ -26,7 +26,7 @@ export default function Layout({ children, home }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <header className={styles.header}>
-        <Link href="/">
+        <Link href="/" styles={{ textDecoration: "none" }}>
           <Image
             priority
             src="/rect_cctr_logo.png"
@@ -36,8 +36,8 @@ export default function Layout({ children, home }) {
             alt="logo of CC translator"
           />
         </Link>
-        <Link href="/">
-          <a className={styles.heading}>YouTube Subtitle Translator</a>
+        <Link href="/" styles={{ textDecoration: "none" }}>
+          <h1 className={styles.heading}>YouTube Subtitle Translator</h1>
         </Link>
       </header>
       <main>{children}</main>
