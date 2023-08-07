@@ -1,16 +1,16 @@
 import { useState } from "react";
 
 const TranscriptPage = () => {
-  const [videoId, setVideoId] = useState("");
+  const [videoURL, setVideoURL] = useState("");
   const [transcript, setTranscript] = useState("");
 
-  const handleVideoIdChange = (event) => {
-    setVideoId(event.target.value);
+  const handleVideoURLChange = (event) => {
+    setVideoURL(event.target.value);
   };
 
   const fetchTranscript = async () => {
     try {
-      const response = await fetch(`/api/fetch?videoId=${videoId}`);
+      const response = await fetch(`/api/fetch?videoURL=${videoURL}`);
       const data = await response.json();
       setTranscript(data); // Store the fetched transcript in the component's state
     } catch (error) {
@@ -22,9 +22,9 @@ const TranscriptPage = () => {
     <div>
       <input
         type="text"
-        value={videoId}
-        onChange={handleVideoIdChange}
-        placeholder="Enter Video ID"
+        value={videoURL}
+        onChange={handleVideoURLChange}
+        placeholder="Enter Video URL"
       />
       <button onClick={fetchTranscript}>Fetch Transcript</button>
 
@@ -35,6 +35,13 @@ const TranscriptPage = () => {
           <pre>{JSON.stringify(transcript, null, 2)}</pre>
         </div>
       )}
+      <Link
+        to="/pages/api/download?fileName=original_transcript.txt"
+        target="_blank"
+        download
+      >
+        Download
+      </Link>
     </div>
   );
 };

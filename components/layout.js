@@ -13,7 +13,7 @@ export default function Layout({ children, home }) {
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href="/public/rect_cctr_logo.png" />
+        <link rel="icon" href="/rect_cctr_logo.png" />
         <meta
           name="description"
           content="A site to get and translate YouTube video transcripts."
