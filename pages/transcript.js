@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Link from "next/link";
 
 const TranscriptPage = () => {
   const [videoURL, setVideoURL] = useState("");
@@ -36,13 +35,6 @@ const TranscriptPage = () => {
           <pre>{JSON.stringify(transcript, null, 2)}</pre>
         </div>
       )}
-      <Link
-        to="/pages/api/download?fileName=original_transcript.txt"
-        target="_blank"
-        download
-      >
-        Download
-      </Link>
     </div>
   );
 };
