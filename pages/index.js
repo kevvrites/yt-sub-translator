@@ -24,6 +24,9 @@ export default function Home() {
         <li>
           <Link href="../transcript-words">Text Transcript Fetch</Link>
         </li>
+        <li>
+          <Link href="../download">Download</Link>
+        </li>
       </ul>
 
       <h3>Todo</h3>
