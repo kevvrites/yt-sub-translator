@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
-import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { Manrope } from "next/font/google";
@@ -13,19 +12,11 @@ export default function Home() {
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
-
         <link rel="icon" href="/square_cctr_logo.png" />
       </Head>
-      <main className={styles.Head}>Hello World!</main>
       <ul>
         <li>
-          <Link href="../transcript">JSON Transcript Fetch</Link>
-        </li>
-        <li>
-          <Link href="../transcript-words">Text Transcript Fetch</Link>
-        </li>
-        <li>
-          <Link href="../download">Download</Link>
+          <Link href="../transcript">Transcript Fetch</Link>
         </li>
       </ul>
 

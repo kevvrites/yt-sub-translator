@@ -1,4 +1,9 @@
 import { useState } from "react";
+import {
+  parseTranscriptToTxt,
+  parseTranscriptToSbv,
+  parseTranscriptToSrt,
+} from "../api/parser";
 
 const TranscriptPage = () => {
   const [videoURL, setVideoURL] = useState("");
@@ -12,7 +17,7 @@ const TranscriptPage = () => {
     try {
       const response = await fetch(`/api/fetch?videoURL=${videoURL}`);
       const data = await response.json();
-      setTranscript(data); // Store the fetched transcript in the component's state
+      setTranscript(data);
     } catch (error) {
       console.error("Error fetching transcript:", error);
     }
@@ -28,11 +33,26 @@ const TranscriptPage = () => {
       />
       <button onClick={fetchTranscript}>Fetch Transcript</button>
 
-      {/* Display the fetched transcript */}
       {transcript && (
         <div>
-          <h2>Transcript:</h2>
-          <pre>{JSON.stringify(transcript, null, 2)}</pre>
+          <div>
+            <h2>JSON Transcript Object:</h2>
+            <pre>{JSON.stringify(transcript, null, 2)}</pre>
+          </div>
+          <div>
+            <h2>Text (.txt) Format:</h2>
+            <pre>{parseTranscriptToTxt(transcript)}</pre>
+          </div>
+
+          <div>
+            <h2>SubViewer (.sbv) Format:</h2>
+            <pre>{parseTranscriptToSbv(transcript)}</pre>
+          </div>
+
+          <div>
+            <h2>SubRip (.srt) Format:</h2>
+            <pre>{parseTranscriptToSrt(transcript)}</pre>
+          </div>
         </div>
       )}
     </div>

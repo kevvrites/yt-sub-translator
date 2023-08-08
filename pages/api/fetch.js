@@ -1,22 +1,10 @@
 import { YoutubeTranscript } from "youtube-transcript";
-import fs from "fs";
-import path from "path";
 
 const fetchTranscript = async (videoURL) => {
   try {
     const transcript = await YoutubeTranscript.fetchTranscript(videoURL);
-    const transcriptText = transcript.map((item) => item.text).join("\n");
-    const fileName = `original_transcript.txt`;
-    const filePath = path.join(process.cwd(), fileName);
-
-    fs.writeFileSync(filePath, transcriptText);
-    const downloadLink = `/api/download?fileName=${encodeURIComponent(
-      fileName
-    )}`;
-
-    return downloadLink;
+    return transcript;
   } catch (error) {
-    console.error("Error fetching transcript:", error);
     throw error;
   }
 };
