@@ -3,7 +3,7 @@ import {
   parseTranscriptToTxt,
   parseTranscriptToSbv,
   parseTranscriptToSrt,
-} from "../api/parser";
+} from "/pages/api/parser";
 
 const TranscriptPage = () => {
   const [videoURL, setVideoURL] = useState("");
