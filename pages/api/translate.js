@@ -1,27 +1,42 @@
-// const { Configuration, OpenAIApi } = require("openai");
-// const configuration = new Configuration({
-//     apiKey: process.env.OPENAI_API_KEY
-// })
+import { Configuration, OpenAIApi } from 'openai-edge'
 
-// const openai = new OpenAIApi(configuration);
+const source = "English"
+const target = "Simplified Chinese"
 
-// const source = "English"
-// const target = "Simplified Chinese"
+const config = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY
+})
 
-// // with open('clean-transcript.txt', 'r', encoding='utf-8') as file:
-// //     transcript = file.read()
+const openai = new OpenAIApi(config)
 
-// const system_prompt_template = `You will be given lines of text in ${source}, and your task is to translate them into ${target}. Preserve the original line formatting, specifically the number of lines in the file. The translated version should map to the original file as closely as possible.`
+export const runtime = 'edge'
 
-// let prompt = [{"role": "system", "content": system_prompt}]
+export default async function translateTranscript(req, res) {
+    try{
+        const system_prompt = `You will be provided with a JSON object containing a series of text segments along with their durations and offsets. Your task is to perform the following steps:
 
-// // prompt.append({"role": "user", "content": transcript})
+        1. Correct any spelling and spacing mistakes in the ${source} text segments provided in the "text" fields.
+        2. Translate the corrected English text segments into Simplified Chinese.
+        3. Return the updated JSON object with the cleaned and translated text segments, while leaving the other parts of the JSON file unchanged.`
+        
+        const transcript = await req.json()
 
-// // response = openai.ChatCompletion.create(
-// //     model="gpt-3.5-turbo",
-// //     messages=prompt,
-// //     temperature=0,
-// // )
+        const prompt =  [
+            {"role":"system", "content": system_prompt},
+            {"role":"user", "content": transcript}
+        ]
 
-// // with open('translated-transcript.txt', 'w+', encoding='utf-8') as f:
-// //     f.write(response["choices"][0]["message"]["content"])
+        const response = await openai.createChatCompletion({
+            model: 'gpt-3.5-turbo-16k',
+            temperature: 0,
+            messages: prompt,
+            max_tokens: 10000
+        })
+
+        const translatedContent = response
+
+        res.status(200).json({ translatedContent })
+    }   catch (error) {
+    console.error("Error translating transcript:", error)
+    }
+}

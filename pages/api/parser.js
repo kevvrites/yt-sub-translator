@@ -1,4 +1,7 @@
 export function parseTranscriptToTxt(transcriptData) {
+  if (!transcriptData) {
+    return;
+  }
   const lines = [];
 
   for (const item of transcriptData) {
@@ -12,6 +15,9 @@ export function parseTranscriptToTxt(transcriptData) {
 }
 
 export function parseTranscriptToSrt(transcriptData) {
+  if (!transcriptData) {
+    return;
+  }
   function msToTime(ms) {
     const hours = Math.floor(ms / 3600000);
     const minutes = Math.floor((ms % 3600000) / 60000);
@@ -53,12 +59,10 @@ export function parseTranscriptToSrt(transcriptData) {
   return formattedContent;
 }
 
-// Function to parse transcript data to WebVTT format (vtt)
-export function parseTranscriptToVtt(transcriptData) {
-  return "Your WebVTT transcript content goes here...";
-}
-
 export function parseTranscriptToSbv(transcriptData) {
+  if (!transcriptData) {
+    return;
+  }
   function msToTime(ms) {
     const hours = Math.floor(ms / 3600000);
     const minutes = Math.floor((ms % 3600000) / 60000);
@@ -90,33 +94,3 @@ export function parseTranscriptToSbv(transcriptData) {
 
   return formattedContent;
 }
-
-/*
-
-JSON OBJECT SAMPLE
-[
-  {
-    "text": "one",
-    "duration": 2880,
-    "offset": 960
-  },
-  {
-    "text": "two",
-    "duration": 2700,
-    "offset": 2520
-  },
-]
-
-For text files:
-Just return the text
-{transcriptData.map((item, index) => (
-    <span key={index}>
-        {item.text}
-        <br />
-    </span>
-))}
-----------------------------------------------
-For sbv files:
-
-
-*/

@@ -24,7 +24,7 @@ export default function Home() {
       <ul>
         <li>Clean transcript using openai</li>
         <li>Translate transcript using openai</li>
-        <li>Add support for file downloads</li>
+        <li style={{color: 'red'}}>Add support for file downloads</li>
         <li>Clean up interfaces</li>
       </ul>
     </Layout>
