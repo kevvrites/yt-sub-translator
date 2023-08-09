@@ -29,27 +29,31 @@ const TranscriptPage = () => {
       const response = await fetch(`/api/fetch?videoURL=${videoURL}`);
       const data = await response.json();
       setTranscript(data);
-      console.dir(transcript)
+      console.log(transcript)
+      // console.log(transcript.json())
+      console.log(JSON.stringify(transcript))
+      console.log(JSON.parse(JSON.stringify(transcript)))
     } catch (error) {
       console.error("Error fetching transcript:", error);
     }
   };
 
-  
-
   const translate = async () => {
     try {
-      console.log(transcript)
+      console.log(JSON.stringify(transcript))
       const translatedResponse = await fetch(`/api/translate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ transcript }),
+        body: JSON.stringify(transcript),
       });
       try {
         if (translatedResponse.ok) {
-          const translatedTranscript = await translatedResponse.json();
+          console.log("WOKEGE")
+          console.log(JSON.parse(translatedResponse))                   /////// BREAKING ON THIS LINE <------------------
+          const translatedTranscript = await translatedResponse.json(); /////// BREAKING ON THIS LINE <------------------
+          console.log("maybe? we'll see this?")
           setTranslatedTranscript(translatedTranscript);
         } else {
           console.error("Error translating transcript:", translatedResponse.statusText)
@@ -58,7 +62,6 @@ const TranscriptPage = () => {
         console.error("Error parsing JSON response:", error)
       }
     } catch (error) {
-      console.log('error bruh');
       console.error("Error translating transcript:", error);
     }
   }
