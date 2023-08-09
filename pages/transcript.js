@@ -13,9 +13,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const TranscriptPage = () => {
-  const [videoURL, setVideoURL] = useState(
-    "https://www.youtube.com/watch?v=1h1gzh3r7OA"
-  );
+  const [videoURL, setVideoURL] = useState("");
   const [transcript, setTranscript] = useState("");
   const [translatedTranscript, setTranslatedTranscript] = useState("");
   const [isValidURL, setIsValidURL] = useState(true);
@@ -43,34 +41,6 @@ const TranscriptPage = () => {
       setIsFetching(false);
     } catch (error) {
       console.error("Error fetching transcript:", error);
-    }
-  };
-
-  const translate = async () => {
-    try {
-      console.log(JSON.stringify(transcript));
-      const translatedResponse = await fetch("/api/translate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(transcript),
-      });
-
-      if (translatedResponse.ok) {
-        console.log("WOKEGE");
-        console.log(JSON.parse(translatedResponse)); /////// BREAKING ON THIS LINE <------------------
-        const translatedTranscript = await translatedResponse.json(); /////// BREAKING ON THIS LINE <------------------
-        console.log("maybe? we'll see this?");
-        setTranslatedTranscript(translatedTranscript);
-      } else {
-        console.error(
-          "Error translating transcript:",
-          translatedResponse.statusText
-        );
-      }
-    } catch (error) {
-      console.error("Error translating transcript:", error);
     }
   };
 

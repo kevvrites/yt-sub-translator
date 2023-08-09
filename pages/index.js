@@ -21,10 +21,12 @@ export default function Home() {
 
       <h3>Todo</h3>
       <ul>
-        <li>Clean transcript using openai</li>
-        <li>Translate transcript using openai</li>
         <li style={{ color: "red" }}>Add support for file downloads</li>
         <li>Clean up interfaces</li>
+        <li>Fix broken links/error handling</li>
+        <li>...youtube video doesnt have subtitles enabled</li>
+        <li>...make fetch before enable translate</li>
+        <li>...parser errors from attempting to parse too early</li>
       </ul>
     </Layout>
   );
