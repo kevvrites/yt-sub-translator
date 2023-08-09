@@ -3,7 +3,6 @@ import Layout, { siteTitle } from "../components/layout";
 import Link from "next/link";
 import Image from "next/image";
 import { Manrope } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -24,7 +23,7 @@ export default function Home() {
       <ul>
         <li>Clean transcript using openai</li>
         <li>Translate transcript using openai</li>
-        <li style={{color: 'red'}}>Add support for file downloads</li>
+        <li style={{ color: "red" }}>Add support for file downloads</li>
         <li>Clean up interfaces</li>
       </ul>
     </Layout>
