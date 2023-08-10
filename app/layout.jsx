@@ -1,6 +1,4 @@
 import styles from "./layout.module.css";
-import utilStyles from "../styles/utils.module.css";
-import Link from "next/link";
 import { Manrope } from "next/font/google";
 import Navbar from ".//components/navbar.jsx";
 
