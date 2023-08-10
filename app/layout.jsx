@@ -1,18 +1,17 @@
-import Head from "next/head";
-import Image from "next/image";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 import { Manrope } from "next/font/google";
+import Navbar from ".//components/navbar.jsx";
 
 const name = "Kevin Liu";
 const manrope = Manrope({ subsets: ["latin"] });
 export const siteTitle = "YouTube Subtitle Translator";
 
-export default function Layout({ children, home }) {
+export default function RootLayout({ children }) {
   return (
-    <div className={styles.container}>
-      <Head>
+    <html lang="en">
+      <head className={styles.header}>
         <link rel="icon" href="/rect_cctr_logo.png" />
         <meta
           name="description"
@@ -24,23 +23,11 @@ export default function Layout({ children, home }) {
         />
         <meta name="author" content={name} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <header className={styles.header}>
-        <Link href="/" styles={{ textDecoration: "none" }}>
-          <Image
-            priority
-            src="/rect_cctr_logo.png"
-            className={styles.borderHorizLogo}
-            height={160}
-            width={250}
-            alt="logo of CC translator"
-          />
-        </Link>
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <h1 className={styles.heading}>YouTube Subtitle Translator</h1>
-        </Link>
-      </header>
-      <main>{children}</main>
-    </div>
+      </head>
+      <body>
+        <Navbar />
+        {children}
+      </body>
+    </html>
   );
 }

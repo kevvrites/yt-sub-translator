@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Layout, { siteTitle } from "../components/layout";
 import Link from "next/link";
 import Image from "next/image";
 import { Manrope } from "next/font/google";
@@ -8,9 +7,9 @@ const manrope = Manrope({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <Layout home>
+    <>
       <Head>
-        <title>{siteTitle}</title>
+        <title>YouTube Subtitle Translator</title>
         <link rel="icon" href="/square_cctr_logo.png" />
       </Head>
       <ul>
@@ -28,6 +27,6 @@ export default function Home() {
         <li>...make fetch before enable translate</li>
         <li>...parser errors from attempting to parse too early</li>
       </ul>
-    </Layout>
+    </>
   );
 }

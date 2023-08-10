@@ -1,9 +1,11 @@
+"use client";
+
 import { useState } from "react";
 import {
   parseTranscriptToTxt,
   parseTranscriptToSbv,
   parseTranscriptToSrt,
-} from "/pages/api/parser";
+} from "../api/parser";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
@@ -73,7 +75,6 @@ const TranscriptPage = () => {
       {!isValidURL && <p style={{ color: "red" }}> Invalid YouTube URL</p>}
 
       <button onClick={fetchTranscript}>Fetch Transcript</button>
-      <button onClick={translate}>Translate Transcript</button>
       <button onClick={translateTranscript}>Translate Transcript</button>
 
       {transcript && (
