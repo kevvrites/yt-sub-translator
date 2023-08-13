@@ -51,7 +51,9 @@ export default function Transcript() {
   return (
     <div className={styles.container}>
       <h1>Fetch YouTube Transcript</h1>
+      <div className={styles.dropdowns}>
       {/* Source Language Selector */}
+      <div className={styles.languagemenus}>
       <LanguageSelector
         defaultLanguage="English"
         labelText="Select Source Language:"
@@ -64,13 +66,14 @@ export default function Transcript() {
         labelText="Select Target Language:"
         onSelectLanguage={handleTargetLanguageChange}
       />
-
+</div>
+<div className={styles.formatmenu}>
       <FormatSelector
         defaultFormat= {fileFormat}
         labelText="Select Output Format:"
         onSelectFormat={handleFormatChange}
-      />
-
+      /></div>
+</div>
       <div className={styles.input}>
         <label>
           Enter YouTube URL:
