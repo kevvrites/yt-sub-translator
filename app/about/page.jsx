@@ -57,7 +57,7 @@ const About = () => {
         <p>
           A: For now, I am paying the costs out of pocket. I am unemployed with
           limited income, so please do not abuse it. If you want to support this
-          and future creations I make, consider donating{" "}
+          and future creations I make, consider donating
           <Link className={styles.donate} href="https://ko-fi.com/kevvrites">
             here
           </Link>
