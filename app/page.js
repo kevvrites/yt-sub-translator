@@ -1,31 +1,21 @@
-import Head from "next/head";
-import Link from "next/link";
-import { Manrope } from "next/font/google";
-
-const manrope = Manrope({ subsets: ["latin"] });
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>YouTube Subtitle Translator</title>
-        <link rel="icon" href="/square_cctr_logo.png" />
-      </Head>
-      <ul>
-        <li>
-          <Link href="../transcript">Transcript Fetch</Link>
-        </li>
-      </ul>
-
-      <h3>Todo</h3>
-      <ul>
-        <li style={{ color: "red" }}>Add support for file downloads</li>
-        <li>Clean up interfaces</li>
-        <li>Fix broken links/error handling</li>
-        <li>...youtube video doesnt have subtitles enabled</li>
-        <li>...make fetch before enable translate</li>
-        <li>...parser errors from attempting to parse too early</li>
-      </ul>
-    </>
+    <div className={styles.container}>
+      <div className={styles.text}>
+        Take any YouTube video.
+        <br />
+        Get subtitles in any language - in less than 5 minutes.
+      </div>
+      <div className={styles.videoContainer}>
+        <div className={styles.video} alt="placeholder for video">
+          Video here
+        </div>
+      </div>
+      <div className={styles.cta}>
+        <button className={styles.button}>button component</button>
+      </div>
+    </div>
   );
 }

@@ -1,30 +1,30 @@
-import styles from "./layout.module.css";
 import { Manrope } from "next/font/google";
-import Navbar from ".//components/navbar.jsx";
-
-const name = "Kevin Liu";
+import Navbar from "../components/navbar/Navbar.jsx";
+import Footer from "../components/footer/Footer.jsx";
 const manrope = Manrope({ subsets: ["latin"] });
-export const siteTitle = "YouTube Subtitle Translator";
+import "./globals.css";
+import { Metadata } from "next";
+
+export const metadata = {
+  title: "YouTube Subtitle Translator",
+  description: "A site to get and translate YouTube video transcripts.",
+  keywords:
+    "Javascript, YouTube, Subtitle, Translate, Translation, Tool, Transcript",
+  author: "Kevin Liu",
+  viewport: "width=device-width, initial-scale=1",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head className={styles.header}>
-        <link rel="icon" href="/rect_cctr_logo.png" />
-        <meta
-          name="description"
-          content="A site to get and translate YouTube video transcripts."
-        />
-        <meta
-          name="keywords"
-          content="Javascript, YouTube, Subtitle, Translate, Translation, Tool, Transcript"
-        />
-        <meta name="author" content={name} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
       <body>
-        <Navbar />
-        {children}
+        <div className={manrope.className}>
+          <div className="container">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </div>
       </body>
     </html>
   );
