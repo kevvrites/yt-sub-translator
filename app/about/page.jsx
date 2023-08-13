@@ -9,9 +9,9 @@ const About = () => {
       <div className={styles.response}>
         I wanted a tool that can take a YouTube video as input and generate
         translated subtitles that I could upload directly to YouTube. My
-        relatives don't know English, but I'm not fluent in writing Chinese, and
-        using Google Translate/GPT-4 took me 2 hours to translate a 30 minute
-        video line by line.
+        relatives do not know English, but I am not fluent in writing Chinese,
+        and using Google Translate/GPT-4 took me 2 hours to translate a 30
+        minute video line by line.
       </div>
       <div className={styles.h1}>Features included:</div>
       <div className={styles.response}>
@@ -57,7 +57,7 @@ const About = () => {
         <p>
           A: For now, I am paying the costs out of pocket. I am unemployed with
           limited income, so please do not abuse it. If you want to support this
-          and future creations I make, consider donating
+          and future creations I make, consider donating{" "}
           <Link className={styles.donate} href="https://ko-fi.com/kevvrites">
             here
           </Link>
