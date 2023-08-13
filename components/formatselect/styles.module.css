@@ -1,0 +1,28 @@
+/* Style for the container */
+.container {
+    margin: 20px;
+  }
+  
+  /* Style for the label */
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  /* Style for the select dropdown */
+  .select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  /* Style for the selected language text */
+  .selected {
+    margin-top: 8px;
+    font-style: italic;
+  }
+  

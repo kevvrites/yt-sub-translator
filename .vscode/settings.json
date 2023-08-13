@@ -1,0 +1,4 @@
+{
+    "prettier.quoteProps": "preserve",
+    "prettier.requirePragma": false
+}

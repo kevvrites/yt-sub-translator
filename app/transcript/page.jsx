@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import styles from './styles.module.css'
+import LanguageSelector from "../../components/langselect/LanguageSelector"
+import FormatSelector from "../../components/formatselect/FormatSelector"
 
 export default function Transcript() {
   const [inputUrl, setInputUrl] = useState(
@@ -11,8 +13,22 @@ export default function Transcript() {
   );
   const [isFetching, setIsFetching] = useState(false);
   const [sourceLang, setSourceLang] = useState("English");
-  const [targetLang, setTargetLang] = useState("Simplified Chinese");
+  const [targetLang, setTargetLang] = useState("Spanish");
   const [fileFormat, setFileFormat] = useState("txt");
+
+  const handleSourceLanguageChange = (newLanguage) => {
+    console.log(newLanguage)
+    setSourceLang(newLanguage);
+  };
+  const handleTargetLanguageChange = (newLanguage) => {
+    setTargetLang(newLanguage);
+    console.log(newLanguage)
+  };
+  const handleFormatChange = (newFormat) => {
+    console.log('format changed')
+    setFileFormat(newFormat);
+    console.log(newFormat);
+  };
 
   const fetchTranscript = async () => {
     const response = await fetch(
@@ -35,7 +51,27 @@ export default function Transcript() {
   return (
     <div className={styles.container}>
       <h1>Fetch YouTube Transcript</h1>
-      <div>
+      {/* Source Language Selector */}
+      <LanguageSelector
+        defaultLanguage="English"
+        labelText="Select Source Language:"
+        onSelectLanguage={handleSourceLanguageChange}
+      />
+
+      {/* Target Language Selector */}
+      <LanguageSelector
+        defaultLanguage="Spanish"
+        labelText="Select Target Language:"
+        onSelectLanguage={handleTargetLanguageChange}
+      />
+
+      <FormatSelector
+        defaultFormat= {fileFormat}
+        labelText="Select Output Format:"
+        onSelectFormat={handleFormatChange}
+      />
+
+      <div className={styles.input}>
         <label>
           Enter YouTube URL:
           <input

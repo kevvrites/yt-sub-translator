@@ -35,12 +35,15 @@ function selectFileFormat(format, translatedTranscript) {
       return formattedTxtTranscript;
     case "srt":
       const srtLines = [];
+      console.log('srt case called.')
+      for (let i = 0; i < translatedTranscript.length; i++) {
+        console.log(translatedTranscript.length)
+        const srtLine = translatedTranscript[i];
+        const index = i + 1;
+        const srtOffsetTime = msToTime(srtLine.offset);
+        const srtEndTime = msToTime(srtLine.offset + srtLine.duration);
 
-      for (let i = 0; i < translatedTranscript; i++) {
-        const srtLine = translatedTranscript[i++];
-        const index = i;
-        const srtOffsetTime = msToTime(srtLine.srtOffsetTime);
-        const srtEndTime = msToTime(srtLine.srtOffsetTime + srtLine.duration);
+        console.log(srtOffsetTime, srtEndTime)
 
         srtLines.push(index);
         const srtTimestamp = `${srtOffsetTime} --> ${srtEndTime}`;
@@ -48,10 +51,10 @@ function selectFileFormat(format, translatedTranscript) {
 
         const srtContent = `${srtLine.text}\n`;
         srtLines.push(srtContent);
-
-        const formattedSrtTranscript = srtLines.join("\n");
-        return formattedSrtTranscript;
       }
+      const formattedSrtTranscript = srtLines.join("\n");
+      console.log(formattedSrtTranscript)
+      return formattedSrtTranscript;
     case "sbv":
       const sbvLines = [];
 
@@ -59,13 +62,13 @@ function selectFileFormat(format, translatedTranscript) {
         const sbvOffsetTime = msToTime(sbvLine.offset);
         const sbvEndTime = msToTime(sbvLine.offset + sbvLine.duration);
 
-        const sbvTimestamp = `${sbvOffsetTime},${sbvEndTime}\n`;
-        sbvContent = `${sbvLine.text}\n`;
+        const sbvTimestamp = `${sbvOffsetTime},${sbvEndTime}`;
+        const sbvContent = `${sbvLine.text}\n`;
 
         sbvLines.push(sbvTimestamp);
         sbvLines.push(sbvContent);
       }
-      const formattedSbvTranscript = lines.join("\n");
+      const formattedSbvTranscript = sbvLines.join("\n");
       return formattedSbvTranscript;
   }
 }
@@ -78,6 +81,7 @@ export async function GET(req) {
   const target = searchParams.get("targetlang");
   const format = searchParams.get("format");
 
+  console.log("FORMAT SELECTED: ", format)
   const transcript = await fetchTranscript(videoLink);
 
   // original transcript stored
