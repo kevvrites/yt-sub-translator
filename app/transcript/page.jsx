@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import styles from './styles.module.css'
+
 export default function Transcript() {
   const [inputUrl, setInputUrl] = useState(
     "https://www.youtube.com/watch?v=1h1gzh3r7OA"
@@ -31,7 +33,7 @@ export default function Transcript() {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Fetch YouTube Transcript</h1>
       <div>
         <label>

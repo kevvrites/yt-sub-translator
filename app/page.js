@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -14,7 +15,7 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.cta}>
-        <button className={styles.button}>button component</button>
+      <Link href='/transcript'><button className={styles.button}>Try it yourself</button></Link>
       </div>
     </div>
   );
