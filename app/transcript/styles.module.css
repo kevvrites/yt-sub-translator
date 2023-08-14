@@ -18,3 +18,8 @@
 .dropdowns:last-child {
     margin-left: auto;
 }
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}

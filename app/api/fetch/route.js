@@ -1,5 +1,7 @@
 import { YoutubeTranscript } from "youtube-transcript";
 import { NextResponse } from "next/server";
+import download from 'downloadjs';
+
 // const { YoutubeTranscript } = require("youtube-transcript");
 // const { NextResponse } = require("next/server");
 
@@ -128,8 +130,6 @@ export async function GET(req) {
   );
 
   const formattedTranscript = selectFileFormat(format, translatedTranscript);
-  console.log({ formattedTranscript });
-  console.log(NextResponse.json({ formattedTranscript }));
 
   return NextResponse.json(formattedTranscript);
 }

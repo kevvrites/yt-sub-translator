@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from './styles.module.css'
 import LanguageSelector from "../../components/langselect/LanguageSelector"
 import FormatSelector from "../../components/formatselect/FormatSelector"
-
+import DownloadButton from "../../components/download/DownloadButton"
 export default function Transcript() {
   const [inputUrl, setInputUrl] = useState(
     "https://www.youtube.com/watch?v=1h1gzh3r7OA"
@@ -31,6 +31,7 @@ export default function Transcript() {
   };
 
   const fetchTranscript = async () => {
+    setIsFetching(true);
     const response = await fetch(
       `api/fetch?videoURL=${inputUrl}&sourcelang=${sourceLang}&targetlang=${targetLang}&format=${fileFormat}`,
       {
@@ -42,38 +43,38 @@ export default function Transcript() {
     );
 
     if (!response.ok) {
-      console.log("bad");
+      console.log("bad response");
     }
     const transcript = await response.json();
     setTranscript(transcript);
+    setIsFetching(false);
   };
 
   return (
     <div className={styles.container}>
       <h1>Fetch YouTube Transcript</h1>
       <div className={styles.dropdowns}>
-      {/* Source Language Selector */}
-      <div className={styles.languagemenus}>
-      <LanguageSelector
-        defaultLanguage="English"
-        labelText="Select Source Language:"
-        onSelectLanguage={handleSourceLanguageChange}
-      />
+        <div className={styles.languagemenu}>
+          <LanguageSelector
+            defaultLanguage="English"
+            labelText="Select Source Language:"
+            onSelectLanguage={handleSourceLanguageChange}
+          />
 
-      {/* Target Language Selector */}
-      <LanguageSelector
-        defaultLanguage="Spanish"
-        labelText="Select Target Language:"
-        onSelectLanguage={handleTargetLanguageChange}
-      />
-</div>
-<div className={styles.formatmenu}>
-      <FormatSelector
-        defaultFormat= {fileFormat}
-        labelText="Select Output Format:"
-        onSelectFormat={handleFormatChange}
-      /></div>
-</div>
+          <LanguageSelector
+            defaultLanguage="Spanish"
+            labelText="Select Target Language:"
+            onSelectLanguage={handleTargetLanguageChange}
+          />
+        </div>
+        <div className={styles.formatmenu}>
+          <FormatSelector
+            defaultFormat= {fileFormat}
+            labelText="Select Output Format:"
+            onSelectFormat={handleFormatChange}
+          />
+        </div>
+      </div>
       <div className={styles.input}>
         <label>
           Enter YouTube URL:
@@ -85,10 +86,12 @@ export default function Transcript() {
           />
         </label>
       </div>
-      <div>
+      <div className={styles.buttons}>
         <button onClick={fetchTranscript} disabled={isFetching}>
           {isFetching ? "Fetching..." : "Fetch Transcript"}
         </button>
+
+        <DownloadButton content={transcript} fileExtension = {fileFormat} />
       </div>
       <div style={{ marginTop: "1rem" }}>
         <h2>Transcript:</h2>
