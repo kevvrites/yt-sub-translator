@@ -8,13 +8,13 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: #111;
-  color: #bbb;
+    background: var(--color-background);
+    color: var(--color-text);
+    
 }
 
 a {
   text-decoration: none;
-  color: inherit;
 }
 
 .container {

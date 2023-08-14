@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.siteheader {
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+}
+
+.siteheader a {
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo {
+    margin-top: 1rem;
+}
+
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}

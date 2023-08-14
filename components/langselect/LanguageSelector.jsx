@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css'
+
 const LanguageSelector = ({defaultLanguage, labelText, onSelectLanguage}) => {
   const [language, setLanguage] = useState(defaultLanguage);
 
