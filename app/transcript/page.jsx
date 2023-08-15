@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import styles from './styles.module.css'
-import LanguageSelector from "../../components/langselect/LanguageSelector"
-import FormatSelector from "../../components/formatselect/FormatSelector"
-import DownloadButton from "../../components/download/DownloadButton"
+import styles from "./styles.module.css";
+import LanguageSelector from "../../components/langselect/LanguageSelector";
+import FormatSelector from "../../components/formatselect/FormatSelector";
+import DownloadButton from "../../components/download/DownloadButton";
 export default function Transcript() {
   const [inputUrl, setInputUrl] = useState(
     "https://www.youtube.com/watch?v=1h1gzh3r7OA"
@@ -17,15 +17,15 @@ export default function Transcript() {
   const [fileFormat, setFileFormat] = useState("txt");
 
   const handleSourceLanguageChange = (newLanguage) => {
-    console.log(newLanguage)
+    console.log(newLanguage);
     setSourceLang(newLanguage);
   };
   const handleTargetLanguageChange = (newLanguage) => {
     setTargetLang(newLanguage);
-    console.log(newLanguage)
+    console.log(newLanguage);
   };
   const handleFormatChange = (newFormat) => {
-    console.log('format changed')
+    console.log("format changed");
     setFileFormat(newFormat);
     console.log(newFormat);
   };
@@ -44,9 +44,10 @@ export default function Transcript() {
 
     if (!response.ok) {
       console.log("bad response");
+      setIsFetching(false);
     }
     const transcript = await response.json();
-    setTranscript(transcript);
+    setTranscript(JSON.stringify(transcript));
     setIsFetching(false);
   };
 
@@ -69,7 +70,7 @@ export default function Transcript() {
         </div>
         <div className={styles.formatmenu}>
           <FormatSelector
-            defaultFormat= {fileFormat}
+            defaultFormat={fileFormat}
             labelText="Select Output Format:"
             onSelectFormat={handleFormatChange}
           />
@@ -91,7 +92,7 @@ export default function Transcript() {
           {isFetching ? "Fetching..." : "Fetch Transcript"}
         </button>
 
-        <DownloadButton content={transcript} fileExtension = {fileFormat} />
+        <DownloadButton content={transcript} fileExtension={fileFormat} />
       </div>
       <div style={{ marginTop: "1rem" }}>
         <h2>Transcript:</h2>

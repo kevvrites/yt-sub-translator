@@ -1,9 +1,6 @@
 import { YoutubeTranscript } from "youtube-transcript";
 import { NextResponse } from "next/server";
-import download from 'downloadjs';
-
-// const { YoutubeTranscript } = require("youtube-transcript");
-// const { NextResponse } = require("next/server");
+import download from "downloadjs";
 
 // helper function for formatting timestamps
 function msToTime(ms) {
@@ -37,15 +34,15 @@ function selectFileFormat(format, translatedTranscript) {
       return formattedTxtTranscript;
     case "srt":
       const srtLines = [];
-      console.log('srt case called.')
+      console.log("srt case called.");
       for (let i = 0; i < translatedTranscript.length; i++) {
-        console.log(translatedTranscript.length)
+        console.log(translatedTranscript.length);
         const srtLine = translatedTranscript[i];
         const index = i + 1;
         const srtOffsetTime = msToTime(srtLine.offset);
         const srtEndTime = msToTime(srtLine.offset + srtLine.duration);
 
-        console.log(srtOffsetTime, srtEndTime)
+        console.log(srtOffsetTime, srtEndTime);
 
         srtLines.push(index);
         const srtTimestamp = `${srtOffsetTime} --> ${srtEndTime}`;
@@ -55,7 +52,7 @@ function selectFileFormat(format, translatedTranscript) {
         srtLines.push(srtContent);
       }
       const formattedSrtTranscript = srtLines.join("\n");
-      console.log(formattedSrtTranscript)
+      console.log(formattedSrtTranscript);
       return formattedSrtTranscript;
     case "sbv":
       const sbvLines = [];
@@ -83,10 +80,10 @@ export async function GET(req) {
   const target = searchParams.get("targetlang");
   const format = searchParams.get("format");
 
-  console.log("FORMAT SELECTED: ", format)
-  const transcript = await fetchTranscript(videoLink);
+  const transcript = await fetchTranscript(videoLink); // transcript is a JSON object
 
   // original transcript stored
+  // return NextResponse.json(transcript);
 
   // OpenAI gpt-3.5-turbo for translation
   const system_prompt = `You will be provided with a JSON object containing a series of text segments along with their durations and offsets from the user. Translate the ${source} text segments into ${target}. Return the updated JSON object with the translated text segments, while leaving the other parts of the JSON file unchanged.`;
@@ -95,7 +92,7 @@ export async function GET(req) {
 
   //prettier-ignore
   const payload = {
-    model: "gpt-3.5-turbo",
+    model: "gpt-3.5-turbo-16k",
     messages: [
       { "role": "system", "content": system_prompt },
       { "role": "user", "content": transcriptString}
@@ -104,9 +101,11 @@ export async function GET(req) {
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
-    max_tokens: 3000,
+    max_tokens: 10000,
     n: 1,
   };
+
+  console.log(payload);
 
   const openaiResponse = await fetch(
     "https://api.openai.com/v1/chat/completions",
@@ -120,7 +119,9 @@ export async function GET(req) {
     }
   );
   const openaiJSON = await openaiResponse.json();
+  console.log(openaiJSON);
 
+  return NextResponse.json(openaiJSON.choices[0].message.content);
   // transcript translation completed
 
   // format transcript
