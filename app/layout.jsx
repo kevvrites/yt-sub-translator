@@ -1,6 +1,5 @@
 import { Manrope } from "next/font/google";
 import Footer from "../components/footer/Footer.jsx";
-const manrope = Manrope({ subsets: ["latin"] });
 import "./globals.css";
 import { cookies } from "next/headers";
 import { LIGHT_COLORS, DARK_COLORS } from "../constants";
@@ -9,6 +8,8 @@ import styles from "./layout.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { Analytics } from "@vercel/analytics/react";
+
+const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata = {
   title: "YouTube Subtitle Translator",
@@ -21,11 +22,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const savedTheme = cookies().get("color-theme");
-  const theme = savedTheme?.value || "light";
+  const theme = savedTheme?.value || "dark";
 
   const themeColors = theme === "light" ? LIGHT_COLORS : DARK_COLORS;
+
   return (
-    <html lang="en" data-color-theme={theme} styles={themeColors}>
+    <html lang="en" data-color-theme={theme} style={themeColors}>
       <body>
         <div className={manrope.className}>
           <div className={styles.container}>
@@ -62,7 +64,7 @@ export default function RootLayout({ children }) {
             </div>
             {children}
             <Footer />
-            <analytics />
+            <Analytics />
           </div>
         </div>
       </body>
