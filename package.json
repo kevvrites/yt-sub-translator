@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.0.2",
     "clsx": "^2.0.0",
     "downloadjs": "^1.4.7",
     "eslint": "8.46.0",
