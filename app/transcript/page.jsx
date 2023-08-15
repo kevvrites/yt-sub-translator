@@ -17,17 +17,13 @@ export default function Transcript() {
   const [fileFormat, setFileFormat] = useState("txt");
 
   const handleSourceLanguageChange = (newLanguage) => {
-    console.log(newLanguage);
     setSourceLang(newLanguage);
   };
   const handleTargetLanguageChange = (newLanguage) => {
     setTargetLang(newLanguage);
-    console.log(newLanguage);
   };
   const handleFormatChange = (newFormat) => {
-    console.log("format changed");
     setFileFormat(newFormat);
-    console.log(newFormat);
   };
 
   const fetchTranscript = async () => {
@@ -43,11 +39,11 @@ export default function Transcript() {
     );
 
     if (!response.ok) {
-      console.log("bad response");
-      setIsFetching(false);
+      throw new Error("Timed out");
     }
+
     const transcript = await response.json();
-    setTranscript(JSON.stringify(transcript));
+    setTranscript(transcript);
     setIsFetching(false);
   };
 

@@ -34,15 +34,11 @@ function selectFileFormat(format, translatedTranscript) {
       return formattedTxtTranscript;
     case "srt":
       const srtLines = [];
-      console.log("srt case called.");
       for (let i = 0; i < translatedTranscript.length; i++) {
-        console.log(translatedTranscript.length);
         const srtLine = translatedTranscript[i];
         const index = i + 1;
         const srtOffsetTime = msToTime(srtLine.offset);
         const srtEndTime = msToTime(srtLine.offset + srtLine.duration);
-
-        console.log(srtOffsetTime, srtEndTime);
 
         srtLines.push(index);
         const srtTimestamp = `${srtOffsetTime} --> ${srtEndTime}`;
@@ -52,7 +48,6 @@ function selectFileFormat(format, translatedTranscript) {
         srtLines.push(srtContent);
       }
       const formattedSrtTranscript = srtLines.join("\n");
-      console.log(formattedSrtTranscript);
       return formattedSrtTranscript;
     case "sbv":
       const sbvLines = [];
@@ -72,7 +67,7 @@ function selectFileFormat(format, translatedTranscript) {
   }
 }
 
-export async function GET(req) {
+export async function GET(req, res) {
   // pulling videoURL, source, target, and file format
   const { searchParams } = new URL(req.url);
   const videoLink = searchParams.get("videoURL");
@@ -105,8 +100,6 @@ export async function GET(req) {
     n: 1,
   };
 
-  console.log(payload);
-
   const openaiResponse = await fetch(
     "https://api.openai.com/v1/chat/completions",
     {
@@ -118,10 +111,9 @@ export async function GET(req) {
       body: JSON.stringify(payload),
     }
   );
-  const openaiJSON = await openaiResponse.json();
-  console.log(openaiJSON);
 
-  return NextResponse.json(openaiJSON.choices[0].message.content);
+  const openaiJSON = await openaiResponse.json();
+
   // transcript translation completed
 
   // format transcript
