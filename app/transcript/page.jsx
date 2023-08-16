@@ -7,7 +7,7 @@ import DownloadButton from "../../components/download/DownloadButton";
 
 export default function Transcript() {
   const [inputUrl, setInputUrl] = useState(
-    "https://www.youtube.com/watch?v=1h1gzh3r7OA"
+    ""
   );
   const [transcript, setTranscript] = useState(
     "Transcript will appear here once processed."
