@@ -12,10 +12,11 @@ export default function Transcript() {
     "Transcript will appear here once processed."
   );
   const [isFetching, setIsFetching] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false)
   const [sourceLang, setSourceLang] = useState("English");
   const [targetLang, setTargetLang] = useState("Spanish");
   const [fileFormat, setFileFormat] = useState("txt");
-
+  
   const handleSourceLanguageChange = (newLanguage) => {
     setSourceLang(newLanguage);
   };
@@ -50,7 +51,7 @@ export default function Transcript() {
   const fetchTranscript2 = async () => {
     setIsFetching(true);
     const response = await fetch(
-      `api/fetchEdge?videoURL=${inputUrl}&sourcelang=${sourceLang}&targetlang=${targetLang}&format=${fileFormat}`,
+      `api/fetchTranscript?videoURL=${inputUrl}`,
       {
         method: "GET",
         headers: {
@@ -59,13 +60,26 @@ export default function Transcript() {
       }
     );
 
-    if (!response.ok) {
-      throw new Error("Timed out");
-    }
-
     const transcript = await response.json();
-    setTranscript(transcript);
+    setTranscript(JSON.stringify(transcript, null, 2));
     setIsFetching(false);
+  };
+
+  const translateTranscript = async () => {
+    setIsTranslating(true);
+    const response = await fetch(
+      `api/translate?transcript=${transcript}&sourcelang=${sourceLang}&targetlang=${targetLang}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const translatedtranscript = await response.json();
+    setTranscript(JSON.stringify(translatedtranscript, null, 2));
+    setIsTranslating(false);
   };
 
   return (
@@ -109,7 +123,10 @@ export default function Transcript() {
           {isFetching ? "Fetching..." : "Fetch Transcript"}
         </button>
         <button onClick={fetchTranscript2} disabled={isFetching}>
-          {isFetching ? "Fetching..." : "Fetch Edge Transcript"}
+          {isFetching ? "Fetching..." : "Fetch JSON Transcript"}
+        </button>
+        <button onClick={translateTranscript} disabled={isFetching || isTranslating}>
+          {isTranslating ? "Translating..." : "Translate JSON Transcript"}
         </button>
 
         <DownloadButton content={transcript} fileExtension={fileFormat} />

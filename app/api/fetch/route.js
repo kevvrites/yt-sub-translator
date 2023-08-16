@@ -1,6 +1,5 @@
 import { YoutubeTranscript } from "youtube-transcript";
 import { NextResponse } from "next/server";
-import download from "downloadjs";
 
 // helper function for formatting timestamps
 function msToTime(ms) {
@@ -113,7 +112,9 @@ export async function GET(req, res) {
   );
 
   const openaiJSON = await openaiResponse.json();
-
+  console.log(openaiJSON)
+  console.log(JSON.parse(openaiJSON.choices[0].message.content))
+  console.log(JSON.stringify(JSON.parse(openaiJSON.choices[0].message.content)))
   // transcript translation completed
 
   // format transcript
