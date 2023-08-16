@@ -37,29 +37,29 @@ export default function RootLayout({ children }) {
                 href="/about"
                 style={{ textDecoration: "none" }}
               >
-                About
+                <span className={styles.about}>About</span>
               </Link>
-              <div className={styles.banner}>
-                <div className={styles.logo}>
-                  <Link href="/" styles={{ textDecoration: "none" }}>
-                    <Image
-                      priority
-                      src="/rect_cctr_logo.png"
-                      className={styles.borderHorizLogo}
-                      height={160}
-                      width={250}
-                      alt="logo of CC translator"
-                    />
-                  </Link>
-                </div>
-                <div className={styles.title}>
-                  <Link href="/" style={{ textDecoration: "none" }}>
+<div className={styles.banner}>
+        <div className={styles.logo}>
+          <Link href="/" styles={{ textDecoration: "none" }}>
+            <Image
+              priority
+              src="/rect_cctr_logo.png"
+              className={styles.borderHorizLogo}
+              height={160}
+              width={250}
+              alt="logo of CC translator"
+            />
+          </Link>
+        </div>
+        <div className={styles.title}>
+          <Link href="/" style={{ textDecoration: "none" }}>
                     <h1 className={styles.heading}>
                       YouTube Subtitle Translator
                     </h1>
-                  </Link>
-                </div>
-              </div>
+          </Link>
+          </div>
+        </div>
               <ThemeToggle initialTheme={theme} />
             </div>
             {children}

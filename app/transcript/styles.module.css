@@ -1,6 +1,9 @@
 .container {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+    margin: 2rem;
 }
 
 .dropdowns {
@@ -22,4 +25,17 @@
 .buttons {
     display: flex;
     justify-content: space-between;
+}
+
+.inputContainer {
+    display: flex;
+}
+
+
+.input input{
+    flex-basis: 80%;
+}
+
+.inputField {
+    flex-basis: 80%;
 }

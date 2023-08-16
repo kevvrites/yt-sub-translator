@@ -32,14 +32,13 @@ const About = () => {
         <p>Q: Why is it returning an error on my video?</p>
         <p>
           A: The tool will not work for private videos or videos that have
-          subtitles/closed captioning disabled.
+          subtitles/closed captioning disabled. Another possible error is that your video is too long.
         </p>
         <p>Q: How did you make this app?</p>
         <p>
           A: I used Vercel and NextJS for the frontend and backend. The
           transcripts are fetched using npm youtube-transcript and translation
-          performed using OpenAI API GPT-3.5-turbo-16k. Authentication is
-          provided through Supabase.
+          performed using OpenAI API GPT-3.5-turbo-16k.
         </p>
         <p>Q: How much does it cost to use?</p>
         <p>
@@ -51,7 +50,7 @@ const About = () => {
           A: As of August 2023, the largest token size accepted for the OpenAI
           GPT-3.5-turbo model is 16,000 tokens, or about 12k words. A 30-minute
           video is about 4k words, so the estimate caps out around a 90 minute
-          video. To be safe, please keep it under 1 hour.
+          video.
         </p>
         <p>Q: Is this app free to use?</p>
         <p>
@@ -62,13 +61,7 @@ const About = () => {
             here
           </Link>
           .
-        </p>
-        <p>Q: Why is there an authentication or account system?</p>
-        <p>
-          A: It is an extra layer of security to prevent bots/DDOS attacks. In
-          the future, I may consider adding subscription tiers for additional
-          usage, features, and support.
-        </p>
+          </p>
         <p>Q:</p>
         <p>A:</p>
         <p>Q:</p>

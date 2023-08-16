@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import LanguageSelector from "../../components/langselect/LanguageSelector";
 import FormatSelector from "../../components/formatselect/FormatSelector";
 import DownloadButton from "../../components/download/DownloadButton";
+
 export default function Transcript() {
   const [inputUrl, setInputUrl] = useState(
     "https://www.youtube.com/watch?v=1h1gzh3r7OA"
@@ -107,16 +108,18 @@ export default function Transcript() {
           />
         </div>
       </div>
-      <div className={styles.input}>
-        <label>
-          Enter YouTube URL:
+      <div className={styles.inputContainer}>
+        <div className={styles.input}>
+          <label className={styles.label}>
+            Enter YouTube URL:
+          </label>
           <input
             type="text"
             value={inputUrl}
             onChange={(e) => setInputUrl(e.target.value)}
-            style={{ width: "80%", padding: "0.5rem" }}
+            className={styles.inputField}
           />
-        </label>
+        </div>
       </div>
       <div className={styles.buttons}>
         <button onClick={fetchTranscript} disabled={isFetching}>
