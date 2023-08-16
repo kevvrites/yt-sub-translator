@@ -47,6 +47,27 @@ export default function Transcript() {
     setIsFetching(false);
   };
 
+  const fetchTranscript2 = async () => {
+    setIsFetching(true);
+    const response = await fetch(
+      `api/fetchEdge?videoURL=${inputUrl}&sourcelang=${sourceLang}&targetlang=${targetLang}&format=${fileFormat}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Timed out");
+    }
+
+    const transcript = await response.json();
+    setTranscript(transcript);
+    setIsFetching(false);
+  };
+
   return (
     <div className={styles.container}>
       <h1>Fetch YouTube Transcript</h1>
@@ -86,6 +107,9 @@ export default function Transcript() {
       <div className={styles.buttons}>
         <button onClick={fetchTranscript} disabled={isFetching}>
           {isFetching ? "Fetching..." : "Fetch Transcript"}
+        </button>
+        <button onClick={fetchTranscript2} disabled={isFetching}>
+          {isFetching ? "Fetching..." : "Fetch Edge Transcript"}
         </button>
 
         <DownloadButton content={transcript} fileExtension={fileFormat} />
