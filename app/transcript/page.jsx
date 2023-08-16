@@ -122,13 +122,13 @@ export default function Transcript() {
         </div>
       </div>
       <div className={styles.buttons}>
-        <button onClick={fetchTranscript} disabled={isFetching}>
-          {isFetching ? "Fetching..." : "Fetch Transcript"}
+        <button className={styles.doAll} onClick={fetchTranscript} disabled={isFetching}>
+          {isFetching ? "Processing" : "DO ALL (only working for videos < 3:30)"}
         </button>
-        <button onClick={fetchTranscript2} disabled={isFetching}>
+        <button className={styles.fetch} onClick={fetchTranscript2} disabled={isFetching}>
           {isFetching ? "Fetching..." : "Fetch JSON Transcript"}
         </button>
-        <button onClick={translateTranscript} disabled={isFetching || isTranslating}>
+        <button className={styles.translate} onClick={translateTranscript} disabled={isFetching || isTranslating}>
           {isTranslating ? "Translating..." : "Translate JSON Transcript"}
         </button>
 

@@ -28,14 +28,25 @@
 }
 
 .inputContainer {
-    display: flex;
-}
-
-
-.input input{
-    flex-basis: 80%;
+    display: block;
+    margin: 1rem;
+    align-self: center;
 }
 
 .inputField {
-    flex-basis: 80%;
+    width: 1000px;
+    padding: 0.8rem;
+    margin-left: 1rem;
+}
+
+.fetch {
+    background-color: yellow;
+}
+
+.translate {
+    background-color: green
+}
+
+.doAll {
+    background-color: orangered;
 }
