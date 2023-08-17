@@ -38,8 +38,8 @@ export default function Transcript() {
   // Entire Process
   const doAll = async () => {
     setIsFetching(true);
-    transcript = await fetchTranscript();
-    setTranscript(transcript);
+    fetched = await fetchTranscript();
+    setTranscript(fetched);
     setIsFetching(false);
     setIsTranslating(true);
     const translatedTranscript = await translateTranscript();
@@ -56,8 +56,8 @@ export default function Transcript() {
       },
     });
 
-    const transcript = await response.json();
-    setTranscript(transcript);
+    fetchedTranscript = await response.json();
+    setTranscript(fetchedTranscript);
     setIsFetching(false);
   };
 
@@ -150,7 +150,7 @@ export default function Transcript() {
       <div className={styles.buttons}>
         <button
           className={styles.doAll}
-          onClick={fetchTranscript}
+          onClick={doAll}
           disabled={isFetching}
         >
           {isFetching
@@ -159,7 +159,7 @@ export default function Transcript() {
         </button>
         <button
           className={styles.fetch}
-          onClick={fetchTranscript2}
+          onClick={fetchTranscript}
           disabled={isFetching}
         >
           {isFetching ? "Fetching..." : "Fetch JSON Transcript"}
