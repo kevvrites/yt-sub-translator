@@ -11,44 +11,43 @@ export default function Transcript() {
   const [transcript, setTranscript] = useState(
     "Transcript will appear here once processed."
   );
+
+  // States
   const [isFetching, setIsFetching] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
+  const [isParsing, setIsParsing] = useState(false);
+
+  // Defaults
   const [sourceLang, setSourceLang] = useState("English");
   const [targetLang, setTargetLang] = useState("Spanish");
   const [fileFormat, setFileFormat] = useState("txt");
 
+  // Default handlers
   const handleSourceLanguageChange = (newLanguage) => {
     setSourceLang(newLanguage);
   };
+
   const handleTargetLanguageChange = (newLanguage) => {
     setTargetLang(newLanguage);
   };
+
   const handleFormatChange = (newFormat) => {
     setFileFormat(newFormat);
   };
 
-  const fetchTranscript = async () => {
+  // Entire Process
+  const doAll = async () => {
     setIsFetching(true);
-    const response = await fetch(
-      `api/fetch?videoURL=${inputUrl}&sourcelang=${sourceLang}&targetlang=${targetLang}&format=${fileFormat}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Timed out");
-    }
-
-    const transcript = await response.json();
+    transcript = await fetchTranscript();
     setTranscript(transcript);
     setIsFetching(false);
+    setIsTranslating(true);
+    const translatedTranscript = await translateTranscript();
+    setTranscript(translatedTranscript);
+    setIsTranslating(false);
   };
 
-  const fetchTranscript2 = async () => {
+  const fetchTranscript = async () => {
     setIsFetching(true);
     const response = await fetch(`api/fetchTranscript?videoURL=${inputUrl}`, {
       method: "GET",
@@ -72,7 +71,7 @@ export default function Transcript() {
     };
 
     try {
-      const response = await fetch("api/translate", {
+      const response = await fetch("api/translateTranscript", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,23 +88,29 @@ export default function Transcript() {
     }
   };
 
-  // const translateTranscript = async () => {
-  //   setIsTranslating(true);
-  //   const response = await fetch(
-  //     `api/translate?transcript=${transcript}&sourcelang=${sourceLang}&targetlang=${targetLang}`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
+  const ParseTranscript = async () => {
+    setIsParsing(true);
 
-  //   const translatedtranscript = await response.json();
-  //   setTranscript(JSON.stringify(translatedtranscript, null, 2));
-  //   setIsTranslating(false);
-  // };
+    const requestBody = {
+      transcript: transcript,
+      format: fileFormat,
+    };
 
+    try {
+      const response = await fetch("api/parseTranscript", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const parsedTranscript = await response.json();
+      setTranscript(parsedTranscript);
+    } catch (error) {
+      console.error("Error: ", error);
+    } finally {
+      setIsParsing(false);
+    }
+  };
   return (
     <div className={styles.container}>
       <h1>Fetch YouTube Transcript</h1>
