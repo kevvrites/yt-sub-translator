@@ -102,7 +102,9 @@ export default function Transcript() {
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(requestBody),
       });
+
       const parsedTranscript = await response.json();
       setTranscript(parsedTranscript);
     } catch (error) {
@@ -111,6 +113,7 @@ export default function Transcript() {
       setIsParsing(false);
     }
   };
+
   return (
     <div className={styles.container}>
       <h1>Fetch YouTube Transcript</h1>
