@@ -6,18 +6,17 @@ import FormatSelector from "../../components/formatselect/FormatSelector";
 import DownloadButton from "../../components/download/DownloadButton";
 
 export default function Transcript() {
-  const [inputUrl, setInputUrl] = useState(
-    ""
-  );
+  const shortytvideo = "youtube.com/watch?v=1h1gzh3r70A";
+  const [inputUrl, setInputUrl] = useState("youtube.com/watch?v=1h1gzh3r7OA");
   const [transcript, setTranscript] = useState(
     "Transcript will appear here once processed."
   );
   const [isFetching, setIsFetching] = useState(false);
-  const [isTranslating, setIsTranslating] = useState(false)
+  const [isTranslating, setIsTranslating] = useState(false);
   const [sourceLang, setSourceLang] = useState("English");
   const [targetLang, setTargetLang] = useState("Spanish");
   const [fileFormat, setFileFormat] = useState("txt");
-  
+
   const handleSourceLanguageChange = (newLanguage) => {
     setSourceLang(newLanguage);
   };
@@ -51,37 +50,61 @@ export default function Transcript() {
 
   const fetchTranscript2 = async () => {
     setIsFetching(true);
-    const response = await fetch(
-      `api/fetchTranscript?videoURL=${inputUrl}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`api/fetchTranscript?videoURL=${inputUrl}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     const transcript = await response.json();
-    setTranscript(JSON.stringify(transcript, null, 2));
+    setTranscript(transcript);
     setIsFetching(false);
   };
 
   const translateTranscript = async () => {
     setIsTranslating(true);
-    const response = await fetch(
-      `api/translate?transcript=${transcript}&sourcelang=${sourceLang}&targetlang=${targetLang}`,
-      {
-        method: "GET",
+
+    const requestBody = {
+      transcript: transcript,
+      sourcelang: sourceLang,
+      targetlang: targetLang,
+    };
+
+    try {
+      const response = await fetch("api/translate", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    );
+        body: JSON.stringify(requestBody),
+      });
 
-    const translatedtranscript = await response.json();
-    setTranscript(JSON.stringify(translatedtranscript, null, 2));
-    setIsTranslating(false);
+      const translatedTranscript = await response.json();
+      setTranscript(translatedTranscript);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsTranslating(false);
+    }
   };
+
+  // const translateTranscript = async () => {
+  //   setIsTranslating(true);
+  //   const response = await fetch(
+  //     `api/translate?transcript=${transcript}&sourcelang=${sourceLang}&targetlang=${targetLang}`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+
+  //   const translatedtranscript = await response.json();
+  //   setTranscript(JSON.stringify(translatedtranscript, null, 2));
+  //   setIsTranslating(false);
+  // };
 
   return (
     <div className={styles.container}>
@@ -110,9 +133,7 @@ export default function Transcript() {
       </div>
       <div className={styles.inputContainer}>
         <div className={styles.input}>
-          <label className={styles.label}>
-            Enter YouTube URL:
-          </label>
+          <label className={styles.label}>Enter YouTube URL:</label>
           <input
             type="text"
             value={inputUrl}
@@ -122,13 +143,27 @@ export default function Transcript() {
         </div>
       </div>
       <div className={styles.buttons}>
-        <button className={styles.doAll} onClick={fetchTranscript} disabled={isFetching}>
-          {isFetching ? "Processing" : "DO ALL (only working for videos < 3:30)"}
+        <button
+          className={styles.doAll}
+          onClick={fetchTranscript}
+          disabled={isFetching}
+        >
+          {isFetching
+            ? "Processing"
+            : "DO ALL (only working for videos < 3:30)"}
         </button>
-        <button className={styles.fetch} onClick={fetchTranscript2} disabled={isFetching}>
+        <button
+          className={styles.fetch}
+          onClick={fetchTranscript2}
+          disabled={isFetching}
+        >
           {isFetching ? "Fetching..." : "Fetch JSON Transcript"}
         </button>
-        <button className={styles.translate} onClick={translateTranscript} disabled={isFetching || isTranslating}>
+        <button
+          className={styles.translate}
+          onClick={translateTranscript}
+          disabled={isFetching || isTranslating}
+        >
           {isTranslating ? "Translating..." : "Translate JSON Transcript"}
         </button>
 
@@ -136,7 +171,7 @@ export default function Transcript() {
       </div>
       <div style={{ marginTop: "1rem" }}>
         <h2>Transcript:</h2>
-        <pre>{transcript}</pre>
+        <pre>{JSON.stringify(transcript, null, 2)}</pre>
       </div>
     </div>
   );
