@@ -7,8 +7,9 @@ import DownloadButton from "../../components/download/DownloadButton";
 
 export default function Transcript() {
   const shortytvideo = "youtube.com/watch?v=1h1gzh3r70A";
-  const [inputUrl, setInputUrl] = useState("youtube.com/watch?v=1h1gzh3r7OA");
-  const [transcript, setTranscript] = useState(
+  const [inputUrl, setInputUrl] = useState("");
+  const [transcript, setTranscript] = useState("");
+  const [displayTranscript, setDisplayTranscript] = useState(
     "Transcript will appear here once processed."
   );
 
@@ -35,18 +36,13 @@ export default function Transcript() {
     setFileFormat(newFormat);
   };
 
-  // Entire Process
-  const doAll = async () => {
-    setIsFetching(true);
-    fetched = await fetchTranscript();
-    setTranscript(fetched);
-    setIsFetching(false);
-    setIsTranslating(true);
-    const translatedTranscript = await translateTranscript();
-    setTranscript(translatedTranscript);
-    setIsTranslating(false);
+  const handleSwapLanguages = (sourceLang, targetLang) => {
+    const tempLang = sourceLang;
+    handleSourceLanguageChange(targetLang);
+    handleTargetLanguageChange(tempLang);
   };
 
+  // Fetch
   const fetchTranscript = async () => {
     setIsFetching(true);
     const response = await fetch(`api/fetchTranscript?videoURL=${inputUrl}`, {
@@ -56,11 +52,13 @@ export default function Transcript() {
       },
     });
 
-    fetchedTranscript = await response.json();
-    setTranscript(fetchedTranscript);
+    const fetchedTranscript = await response.json();
+    setTranscript(JSON.stringify(fetchedTranscript));
+    setDisplayTranscript(JSON.stringify(fetchedTranscript, null, 2));
     setIsFetching(false);
   };
 
+  // Translation
   const translateTranscript = async () => {
     setIsTranslating(true);
 
@@ -80,7 +78,10 @@ export default function Transcript() {
       });
 
       const translatedTranscript = await response.json();
-      setTranscript(translatedTranscript);
+      setTranscript(JSON.parse(translatedTranscript));
+      setDisplayTranscript(
+        JSON.stringify(JSON.parse(translatedTranscript), null, 2)
+      );
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -88,7 +89,8 @@ export default function Transcript() {
     }
   };
 
-  const ParseTranscript = async () => {
+  // Formatting
+  const parseTranscript = async () => {
     setIsParsing(true);
 
     const requestBody = {
@@ -107,6 +109,7 @@ export default function Transcript() {
 
       const parsedTranscript = await response.json();
       setTranscript(parsedTranscript);
+      setDisplayTranscript(parsedTranscript);
     } catch (error) {
       console.error("Error: ", error);
     } finally {
@@ -124,7 +127,6 @@ export default function Transcript() {
             labelText="Select Source Language:"
             onSelectLanguage={handleSourceLanguageChange}
           />
-
           <LanguageSelector
             defaultLanguage="Spanish"
             labelText="Select Target Language:"
@@ -152,34 +154,35 @@ export default function Transcript() {
       </div>
       <div className={styles.buttons}>
         <button
-          className={styles.doAll}
-          onClick={doAll}
-          disabled={isFetching}
-        >
-          {isFetching
-            ? "Processing"
-            : "DO ALL (only working for videos < 3:30)"}
-        </button>
-        <button
           className={styles.fetch}
           onClick={fetchTranscript}
           disabled={isFetching}
         >
-          {isFetching ? "Fetching..." : "Fetch JSON Transcript"}
+          {isFetching ? "Fetching..." : "Fetch"}
         </button>
         <button
           className={styles.translate}
           onClick={translateTranscript}
-          disabled={isFetching || isTranslating}
+          disabled={isTranslating}
         >
-          {isTranslating ? "Translating..." : "Translate JSON Transcript"}
+          {isTranslating ? "Translating..." : "Translate"}
+        </button>
+        <button
+          className={styles.parse}
+          onClick={parseTranscript}
+          disabled={isParsing}
+        >
+          {isTranslating ? "Parsing..." : "Format"}
         </button>
 
-        <DownloadButton content={transcript} fileExtension={fileFormat} />
+        <DownloadButton
+          content={displayTranscript}
+          fileExtension={fileFormat}
+        />
       </div>
       <div style={{ marginTop: "1rem" }}>
         <h2>Transcript:</h2>
-        <pre>{JSON.stringify(transcript, null, 2)}</pre>
+        <pre>{displayTranscript}</pre>
       </div>
     </div>
   );
