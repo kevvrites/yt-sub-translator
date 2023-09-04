@@ -6,9 +6,6 @@ const FormatSelector = ({defaultFormat, labelText, onSelectFormat}) => {
   const handleFormatChange = (event) => {
     setFormat(event.target.value);
     onSelectFormat(event.target.value);
-    if (event.target.value === "srt") {
-      console.log("SRT SRT SRT SRT")
-    }
   };
 
   return (

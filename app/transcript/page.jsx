@@ -96,6 +96,7 @@ export default function Transcript() {
       });
 
       const formatTranscript = await response.json();
+      console.log(formatTranscript)
       setTranscript(formatTranscript);
       setDisplayTranscript(formatTranscript);
     } catch (error) {
@@ -144,6 +145,7 @@ export default function Transcript() {
           {isFetching ? "Fetching..." : "Fetch"}
         </button>
         <button
+          id = "translate"
           className={styles.translate}
           onClick={translateTranscript}
           disabled={isTranslating}
