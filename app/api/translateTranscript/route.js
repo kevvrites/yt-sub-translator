@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 
+export const runtime = 'edge';
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -9,14 +11,13 @@ const openai = new OpenAI({
 export async function POST(req, res) {
   const requestBody = await req.json();
   const transcript = requestBody.transcript;
-  const source = requestBody.sourcelang;
   const target = requestBody.targetlang;
 
   // original transcript stored
   // return NextResponse.json(transcript);
 
   // OpenAI gpt-3.5-turbo for translation
-  const system_prompt = `You will be provided with a JSON object containing a series of text segments along with their durations and offsets from the user. Translate the ${source} text segments into ${target}. Return the updated JSON object with the translated text segments, while leaving the other parts of the JSON file unchanged.`;
+  const system_prompt = `You will be provided with a JSON object containing a series of text segments along with their durations and offsets from the user. Translate the text segments into ${target}. Return the updated JSON object with the translated text segments, while leaving the other parts of the JSON file unchanged.`;
 
   const transcriptString = JSON.stringify(transcript);
 
