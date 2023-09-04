@@ -12,9 +12,15 @@ export async function POST(req, res) {
   const source = requestBody.sourcelang;
   const target = requestBody.targetlang;
 
+  // original transcript stored
+  // return NextResponse.json(transcript);
+
+  // OpenAI gpt-3.5-turbo for translation
   const system_prompt = `You will be provided with a JSON object containing a series of text segments along with their durations and offsets from the user. Translate the ${source} text segments into ${target}. Return the updated JSON object with the translated text segments, while leaving the other parts of the JSON file unchanged.`;
 
   const transcriptString = JSON.stringify(transcript);
+
+  console.log(transcriptString);
 
   const payload = {
     model: "gpt-3.5-turbo-16k",
@@ -26,7 +32,7 @@ export async function POST(req, res) {
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
-    max_tokens: 10000,
+    max_tokens: 9000,
     n: 1,
     stream: true,
   };
@@ -36,3 +42,4 @@ export async function POST(req, res) {
 
   return new StreamingTextResponse(stream);
 }
+
