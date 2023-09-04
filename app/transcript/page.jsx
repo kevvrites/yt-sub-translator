@@ -16,30 +16,19 @@ export default function Transcript() {
   // States
   const [isFetching, setIsFetching] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
-  const [isParsing, setIsParsing] = useState(false);
+  const [isFormatting, setIsFormatting] = useState(false);
 
   // Defaults
-  const [sourceLang, setSourceLang] = useState("English");
   const [targetLang, setTargetLang] = useState("Spanish");
   const [fileFormat, setFileFormat] = useState("txt");
 
   // Default handlers
-  const handleSourceLanguageChange = (newLanguage) => {
-    setSourceLang(newLanguage);
-  };
-
   const handleTargetLanguageChange = (newLanguage) => {
     setTargetLang(newLanguage);
   };
 
   const handleFormatChange = (newFormat) => {
     setFileFormat(newFormat);
-  };
-
-  const handleSwapLanguages = (sourceLang, targetLang) => {
-    const tempLang = sourceLang;
-    handleSourceLanguageChange(targetLang);
-    handleTargetLanguageChange(tempLang);
   };
 
   // Fetch
@@ -64,7 +53,6 @@ export default function Transcript() {
 
     const requestBody = {
       transcript: transcript,
-      sourcelang: sourceLang,
       targetlang: targetLang,
     };
 
@@ -90,8 +78,8 @@ export default function Transcript() {
   };
 
   // Formatting
-  const parseTranscript = async () => {
-    setIsParsing(true);
+  const formatTranscript = async () => {
+    setIsFormatting(true);
 
     const requestBody = {
       transcript: transcript,
@@ -99,7 +87,7 @@ export default function Transcript() {
     };
 
     try {
-      const response = await fetch("api/parseTranscript", {
+      const response = await fetch("api/formatTranscript", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -107,13 +95,13 @@ export default function Transcript() {
         body: JSON.stringify(requestBody),
       });
 
-      const parsedTranscript = await response.json();
-      setTranscript(parsedTranscript);
-      setDisplayTranscript(parsedTranscript);
+      const formatTranscript = await response.json();
+      setTranscript(formatTranscript);
+      setDisplayTranscript(formatTranscript);
     } catch (error) {
       console.error("Error: ", error);
     } finally {
-      setIsParsing(false);
+      setIsFormatting(false);
     }
   };
 
@@ -122,11 +110,6 @@ export default function Transcript() {
       <h1>Fetch YouTube Transcript</h1>
       <div className={styles.dropdowns}>
         <div className={styles.languagemenu}>
-          <LanguageSelector
-            defaultLanguage="English"
-            labelText="Select Source Language:"
-            onSelectLanguage={handleSourceLanguageChange}
-          />
           <LanguageSelector
             defaultLanguage="Spanish"
             labelText="Select Target Language:"
@@ -168,11 +151,11 @@ export default function Transcript() {
           {isTranslating ? "Translating..." : "Translate"}
         </button>
         <button
-          className={styles.parse}
-          onClick={parseTranscript}
-          disabled={isParsing}
+          className={styles.format}
+          onClick={formatTranscript}
+          disabled={isFormatting}
         >
-          {isTranslating ? "Parsing..." : "Format"}
+          {isFormatting ? "Formatting..." : "Format"}
         </button>
 
         <DownloadButton
